@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>myproject</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <context-param>
+		<param-name>jdbcUrl</param-name>
+		<param-value>jdbc:oracle:thin:@localhost:49161:xe</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>jdbcUser</param-name>
+		<param-value>system</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>jdbcPw</param-name>
+		<param-value>admin</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>util.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	
+	<servlet>
+	  <servlet-name>ControllerUsingURI</servlet-name>
+	  <servlet-class>mvc.controller.ControllerUsingURI</servlet-class>
+	  <init-param>
+	    <param-name>configFile</param-name>
+	    <param-value>/WEB-INF/commandHandlerURI.properties</param-value>
+	  </init-param>
+	  <load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+	  <servlet-name>ControllerUsingURI</servlet-name>
+	  <url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<listener>
+		<listener-class>visit.service.VisitSessionListener</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>LoginCheckFilter</filter-name>
+		<filter-class>filter.LoginCheckFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>LoginCheckFilter</filter-name>
+		<url-pattern>/changePw.do</url-pattern>
+		<url-pattern>/article/write.do</url-pattern>
+		<url-pattern>/article/read.do</url-pattern>
+		<url-pattern>/article/modify.do</url-pattern>
+		<url-pattern>/article/delete.do</url-pattern>
+		<url-pattern>/reply/add.do</url-pattern>
+		<url-pattern>/reply/modify.do</url-pattern>
+		<url-pattern>/reply/delete.do</url-pattern>
+	</filter-mapping>
+</web-app>
